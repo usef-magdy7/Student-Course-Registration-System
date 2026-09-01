@@ -1,0 +1,40 @@
+@model StudentCourseSystem.Models.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewData["Title"] = "Enrolled Students";
+}
+
+<h2>Enrolled Students for: <span class="text-primary">@Model.Title</span></h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">Back to Courses</a>
+
+@if (Model.EnrolledStudents == null || !Model.EnrolledStudents.Any())
+{
+    <div class="alert alert-warning">No enrolled students in this course yet.</div>
+}
+else
+{
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var student in Model.EnrolledStudents)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.FullName</td>
+                <td>@student.Email</td>
+                <td>@student.Department</td>
+                <td>@student.Level</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

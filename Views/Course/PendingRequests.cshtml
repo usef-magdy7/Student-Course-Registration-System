@@ -1,0 +1,68 @@
+@using StudentCourseSystem.ViewModels
+@model IEnumerable<PendingRequestViewModel>
+
+@{
+    ViewData["Title"] = "Pending Enrollment Requests";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Pending Enrollment Requests</h2>
+        <div>
+            <a asp-controller="Course" asp-action="Index" class="btn btn-secondary btn-sm me-2">
+                ⬅ Back to Courses
+            </a>
+            <a asp-controller="Course" asp-action="PendingRequests" class="btn btn-outline-primary btn-sm">
+                Refresh List
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No pending course requests found.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student</th>
+                        <th>Department / Level</th>
+                        <th>Course</th>
+                        <th>Requested Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@request.StudentName</strong><br />
+                                <small class="text-muted">@request.StudentEmail</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">@request.StudentDepartment</span>
+                                <span class="badge bg-outline-dark">Lvl @request.StudentLevel</span>
+                            </td>
+                            <td>
+                                <strong>@request.CourseCode</strong> - @request.CourseTitle
+                            </td>
+                            <td>@request.RequestedAt.ToString("g")</td>
+                            <td class="text-center">
+                                <form asp-action="ApproveRequest" asp-route-id="@request.RequestId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                                <form asp-action="RejectRequest" asp-route-id="@request.RequestId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
