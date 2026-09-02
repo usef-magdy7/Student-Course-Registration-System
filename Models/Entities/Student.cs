@@ -1,32 +1,37 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudentCourseSystem.Models.Entities
+namespace StudentCourseRegistrationSystem.Models.Entities
 {
     public class Student
     {
-        public int Id { get; set; }
+            [Key]
+            public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string FullName { get; set; } = string.Empty;
+            [Required(ErrorMessage = "Student name is required")]
+            [StringLength(100, MinimumLength = 3)]
+            public string FullName { get; set; } = string.Empty;
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
+            [Required(ErrorMessage = "Email is required")]
+            [EmailAddress(ErrorMessage = "Invalid email format")]
+            public string Email { get; set; } = string.Empty;
 
-        [Phone]
-        public string? Phone { get; set; }
+            [Phone]
+            [Display(Name = "Phone Number")]
+            public string Phone { get; set; } = string.Empty;
 
-        [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+            [DataType(DataType.Date)]
+            [Display(Name = "Date of Birth")]
+            public DateTime DateOfBirth { get; set; }
 
-        public int Level { get; set; }
+            [Required]
+            public int Level { get; set; }
 
-        [Required]
-        public string Department { get; set; } = string.Empty;
+            [Required]
+            public string Department { get; set; } = string.Empty;
 
-        // Navigation Properties
-        public ICollection<CourseRequest> CourseRequests { get; set; } = new List<CourseRequest>();
-        public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
+           
+            public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
+        
     }
 }
+

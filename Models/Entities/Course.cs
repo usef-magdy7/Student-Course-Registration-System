@@ -1,4 +1,4 @@
-namespace StudentCourseSystem.Models.Entities
+﻿namespace StudentCourseRegistrationSystem.Models.Entities
 {
     public class Course
     {
@@ -11,7 +11,8 @@ namespace StudentCourseSystem.Models.Entities
         public int MaxStudents { get; set; } = 30;
         public bool IsActive { get; set; } = true;
 
-        public ICollection<CourseRequest> CourseRequests { get; set; } = new List<CourseRequest>();
         public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
+
     }
 }
+

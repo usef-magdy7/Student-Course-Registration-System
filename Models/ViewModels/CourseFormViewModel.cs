@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudentCourseSystem.Models.ViewModels
+namespace StudentCourseRegistrationSystem.Models.ViewModels
 {
     public class CourseFormViewModel
     {
