@@ -1,0 +1,46 @@
+﻿@model IEnumerable<StudentCourseRegistrationSystem.Models.ViewModels.StudentCourseEnrollmentViewModel>
+@{
+    ViewData["Title"] = "Available Courses";
+ 
+}
+
+<h2>Available Courses for Registration</h2>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Course Code</th>
+            <th>Title</th>
+            <th>Credits</th>
+            <th>Status / Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Title</td>
+                <td>@item.Credits</td>
+                <td>
+                    @if (item.IsEnrolled)
+                    {
+                        <span class="badge bg-success">Already Enrolled</span>
+                    }
+                    else if (item.IsPending)
+                    {
+                        <span class="badge bg-warning text-dark">Pending Approval</span>
+                    }
+                    else
+                    {
+                        <form asp-action="RequestEnrollment" method="post">
+                            
+                            <input type="hidden" name="courseId" value="@item.CourseId" />
+                            <button type="submit" class="btn btn-primary btn-sm">Request Enroll</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

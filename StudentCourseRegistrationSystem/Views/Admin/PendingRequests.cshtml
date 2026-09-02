@@ -1,0 +1,44 @@
+﻿@model IEnumerable<StudentCourseRegistrationSystem.Models.Entities.CourseRequest>
+@{
+	ViewData["Title"] = "Pending Course Request ";
+}
+
+<h2>Pending Course Request </h2>
+
+@if (!Model.Any())
+{
+	<div class= "alert alert-info mt-3"> There are no request right now.</div>
+}
+else
+{
+<table class="table table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Course Title</th>
+            <th>Request Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var request in Model)
+{
+    <tr>
+        <td>@(request.Student?.FullName ?? request.Student?.Email ?? "N/A")</td>
+        <td>@request.Course?.Title</td>
+        <td>@request.RequestDate.ToString("yyyy-MM-dd HH:mm")</td>
+        <td>
+            <form asp-action="Approve" asp-controller="Admin" asp-route-id="@request.Id" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+            </form>
+
+            <form asp-action="Reject" asp-controller="Admin" asp-route-id="@request.Id" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+            </form>
+        </td>
+    </tr>
+}
+}
+    </tbody>
+</table>
+}
